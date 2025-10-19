@@ -111,16 +111,6 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
 
 /***/ }),
 
-/***/ "(ssr)/./node_modules/lucide-react/dist/esm/icons/facebook.mjs":
-/*!***************************************************************!*\
-  !*** ./node_modules/lucide-react/dist/esm/icons/facebook.mjs ***!
-  \***************************************************************/
-/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
-
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (/* binding */ Facebook)\n/* harmony export */ });\n/* harmony import */ var _createLucideIcon_mjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../createLucideIcon.mjs */ \"(ssr)/./node_modules/lucide-react/dist/esm/createLucideIcon.mjs\");\n/**\n * lucide-react v0.0.1 - ISC\n */\n\n\n\nconst Facebook = (0,_createLucideIcon_mjs__WEBPACK_IMPORTED_MODULE_0__[\"default\"])(\"Facebook\", [\n  [\n    \"path\",\n    {\n      d: \"M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z\",\n      key: \"1jg4f8\"\n    }\n  ]\n]);\n\n\n//# sourceMappingURL=facebook.mjs.map\n//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiKHNzcikvLi9ub2RlX21vZHVsZXMvbHVjaWRlLXJlYWN0L2Rpc3QvZXNtL2ljb25zL2ZhY2Vib29rLm1qcyIsIm1hcHBpbmdzIjoiOzs7OztBQUFBO0FBQ0E7QUFDQTs7QUFFdUQ7O0FBRXZELGlCQUFpQixpRUFBZ0I7QUFDakM7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTs7QUFFK0I7QUFDL0IiLCJzb3VyY2VzIjpbIndlYnBhY2s6Ly9hZG5hbi1wb3J0Zm9saW8vLi9ub2RlX21vZHVsZXMvbHVjaWRlLXJlYWN0L2Rpc3QvZXNtL2ljb25zL2ZhY2Vib29rLm1qcz80ZTljIl0sInNvdXJjZXNDb250ZW50IjpbIi8qKlxuICogbHVjaWRlLXJlYWN0IHYwLjAuMSAtIElTQ1xuICovXG5cbmltcG9ydCBjcmVhdGVMdWNpZGVJY29uIGZyb20gJy4uL2NyZWF0ZUx1Y2lkZUljb24ubWpzJztcblxuY29uc3QgRmFjZWJvb2sgPSBjcmVhdGVMdWNpZGVJY29uKFwiRmFjZWJvb2tcIiwgW1xuICBbXG4gICAgXCJwYXRoXCIsXG4gICAge1xuICAgICAgZDogXCJNMTggMmgtM2E1IDUgMCAwIDAtNSA1djNIN3Y0aDN2OGg0di04aDNsMS00aC00VjdhMSAxIDAgMCAxIDEtMWgzelwiLFxuICAgICAga2V5OiBcIjFqZzRmOFwiXG4gICAgfVxuICBdXG5dKTtcblxuZXhwb3J0IHsgRmFjZWJvb2sgYXMgZGVmYXVsdCB9O1xuLy8jIHNvdXJjZU1hcHBpbmdVUkw9ZmFjZWJvb2subWpzLm1hcFxuIl0sIm5hbWVzIjpbXSwic291cmNlUm9vdCI6IiJ9\n//# sourceURL=webpack-internal:///(ssr)/./node_modules/lucide-react/dist/esm/icons/facebook.mjs\n");
-
-/***/ }),
-
 /***/ "(ssr)/./node_modules/lucide-react/dist/esm/icons/github.mjs":
 /*!*************************************************************!*\
   !*** ./node_modules/lucide-react/dist/esm/icons/github.mjs ***!

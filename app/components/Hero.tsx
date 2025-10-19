@@ -1,21 +1,28 @@
 "use client";
 import React, { useRef, useEffect, useState } from 'react';
-import { motion, useInView, useMotionValue, useSpring, useTransform } from 'framer-motion';
-import CodeBlock from './CodeBlock';
-import { Github, Linkedin, Facebook, Mail, Download, Sparkles, Rocket } from 'lucide-react';
+import { motion, useInView } from 'framer-motion';
+import { Github, Linkedin, Mail, Download, Sparkles, Rocket } from 'lucide-react';
 import { TypeAnimation } from 'react-type-animation';
 
-// Floating Particles Component
+// Fixed Floating Particles Component
 const FloatingParticles = () => {
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  if (!isClient) return null;
+
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none">
-      {[...Array(25)].map((_, i) => (
+      {[...Array(15)].map((_, i) => (
         <motion.div
           key={i}
           className="absolute w-1 h-1 bg-cyan-400/30 rounded-full"
           initial={{
-            x: Math.random() * window.innerWidth,
-            y: Math.random() * window.innerHeight,
+            x: Math.random() * (typeof window !== 'undefined' ? window.innerWidth : 1200),
+            y: Math.random() * (typeof window !== 'undefined' ? window.innerHeight : 800),
           }}
           animate={{
             y: [null, Math.random() * -100 - 50],
@@ -33,210 +40,59 @@ const FloatingParticles = () => {
   );
 };
 
-// Animated Background Orbs
-const AnimatedOrbs = () => {
-  return (
-    <>
-      <motion.div
-        className="absolute top-1/4 -left-20 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl"
-        animate={{
-          scale: [1, 1.2, 1],
-          opacity: [0.3, 0.5, 0.3]
-        }}
-        transition={{
-          duration: 8,
-          repeat: Infinity,
-          ease: "easeInOut"
-        }}
-      />
-      <motion.div
-        className="absolute bottom-1/4 -right-20 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl"
-        animate={{
-          scale: [1.2, 1, 1.2],
-          opacity: [0.5, 0.3, 0.5]
-        }}
-        transition={{
-          duration: 6,
-          repeat: Infinity,
-          ease: "easeInOut",
-          delay: 2
-        }}
-      />
-    </>
-  );
-};
-
-// Animated Number Component
-const AnimatedNumber = ({ value, suffix = '' }: { value: number; suffix?: string }) => {
-  const ref = useRef<HTMLSpanElement>(null);
-  const motionValue = useMotionValue(0);
-  const springValue = useSpring(motionValue, {
-    damping: 30,
-    stiffness: 100
-  });
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
-
-  useEffect(() => {
-    if (isInView) {
-      motionValue.set(value);
-    }
-  }, [motionValue, isInView, value]);
-
-  const displayValue = useTransform(springValue, (latest) =>
-    Math.round(latest) + suffix
-  );
-
-  return <motion.span ref={ref}>{displayValue}</motion.span>;
-};
-
-const Hero: React.FC = () => {
+// Simple Hero Component without window errors
+const Hero = () => {
   const sectionRef = useRef(null);
   const isInView = useInView(sectionRef, { once: true, margin: "-100px" });
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
 
   const scrollToContact = () => {
-    document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+    if (typeof window !== 'undefined') {
+      document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+    }
   };
 
   const downloadResume = () => {
-    const link = document.createElement('a');
-    link.href = '/Adnan-Rajab-Resume.pdf';
-    link.download = 'Adnan-Rajab-Resume.pdf';
-    link.click();
+    if (typeof window !== 'undefined') {
+      const link = document.createElement('a');
+      link.href = '/Adnan-Rajab-Resume.pdf';
+      link.download = 'Adnan-Rajab-Resume.pdf';
+      link.click();
+    }
   };
 
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      setMousePosition({
-        x: (e.clientX / window.innerWidth) * 100,
-        y: (e.clientY / window.innerHeight) * 100
-      });
-    };
-
-    window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
-  }, []);
-
   return (
-    <section 
-      ref={sectionRef} 
-      id="hero" 
-      className="min-h-screen flex items-center justify-center py-16 lg:py-24 relative overflow-hidden"
-      style={{
-        background: `radial-gradient(circle at ${mousePosition.x}% ${mousePosition.y}%, rgba(6, 182, 212, 0.1) 0%, transparent 50%)`
-      }}
-    >
+    <section ref={sectionRef} id="home" className="min-h-screen flex items-center justify-center py-16 lg:py-24 relative overflow-hidden">
       {/* Background Elements */}
       <FloatingParticles />
-      <AnimatedOrbs />
-      
-      {/* Additional Floating Elements */}
-      <motion.div
-        className="absolute top-10 left-10 text-emerald-400/20"
-        animate={{
-          y: [0, -20, 0],
-          rotate: [0, 180, 360]
-        }}
-        transition={{
-          duration: 6,
-          repeat: Infinity,
-          ease: "easeInOut"
-        }}
-      >
-        <Sparkles size={40} />
-      </motion.div>
-      
-      <motion.div
-        className="absolute bottom-20 right-10 text-cyan-400/20"
-        animate={{
-          y: [0, 20, 0],
-          rotate: [360, 180, 0]
-        }}
-        transition={{
-          duration: 8,
-          repeat: Infinity,
-          ease: "easeInOut",
-          delay: 1
-        }}
-      >
-        <Rocket size={35} />
-      </motion.div>
+      <div className="absolute top-1/4 -left-20 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl"></div>
+      <div className="absolute bottom-1/4 -right-20 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl"></div>
 
       <div className="max-w-7xl mx-auto px-6 w-full relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 lg:gap-12 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
           
-          {/* Left Side - Code Block */}
-          <motion.div 
-            className="lg:col-span-3 order-1 lg:order-1"
-            initial={{ opacity: 0, x: -100 }}
-            animate={isInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 1, delay: 0.3 }}
-          >
-            <CodeBlock />
-          </motion.div>
-
-          {/* Right Side - Text Content */}
-          <motion.div 
-            className="lg:col-span-2 order-2 lg:order-2 space-y-8"
-            initial={{ opacity: 0, x: 100 }}
-            animate={isInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 1, delay: 0.5 }}
-          >
-            {/* Main Heading */}
-            <div className="space-y-4">
-              <motion.div 
-                className="flex items-center gap-3 mb-4"
-                initial={{ opacity: 0, y: 20 }}
-                animate={isInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ delay: 0.7 }}
-              >
-                <motion.div 
-                  className="w-12 h-0.5 bg-gradient-to-r from-emerald-400 to-cyan-400"
-                  initial={{ width: 0 }}
-                  animate={isInView ? { width: "48px" } : {}}
-                  transition={{ delay: 0.8, duration: 0.8 }}
-                />
-                <motion.span 
-                  className="text-emerald-400 font-mono text-sm uppercase tracking-wider"
-                  initial={{ opacity: 0 }}
-                  animate={isInView ? { opacity: 1 } : {}}
-                  transition={{ delay: 0.9 }}
-                >
+          {/* Left Side - Text Content */}
+          <div className="space-y-8">
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+              className="space-y-4"
+            >
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-12 h-0.5 bg-gradient-to-r from-emerald-400 to-cyan-400"></div>
+                <span className="text-emerald-400 font-mono text-sm uppercase tracking-wider">
                   Welcome
-                </motion.span>
-              </motion.div>
+                </span>
+              </div>
               
-              <motion.h1 
-                className="text-4xl lg:text-5xl xl:text-6xl font-bold leading-tight"
-                initial={{ opacity: 0, y: 30 }}
-                animate={isInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ delay: 1 }}
-              >
+              <h1 className="text-4xl lg:text-5xl xl:text-6xl font-bold leading-tight">
                 <span className="text-white">Hi, I'm </span>
-                <motion.span 
-                  className="bg-gradient-to-r from-emerald-400 to-cyan-400 bg-clip-text text-transparent"
-                  animate={{
-                    backgroundPosition: ['0%', '100%', '0%']
-                  }}
-                  transition={{
-                    duration: 5,
-                    repeat: Infinity,
-                    ease: "linear"
-                  }}
-                  style={{
-                    backgroundSize: '200% 200%'
-                  }}
-                >
+                <span className="bg-gradient-to-r from-emerald-400 to-cyan-400 bg-clip-text text-transparent">
                   Adnan Rajab
-                </motion.span>
-              </motion.h1>
+                </span>
+              </h1>
               
-              <motion.div 
-                className="text-xl lg:text-2xl text-gray-300 min-h-[60px] lg:min-h-[72px] flex items-center"
-                initial={{ opacity: 0 }}
-                animate={isInView ? { opacity: 1 } : {}}
-                transition={{ delay: 1.2 }}
-              >
+              <div className="text-xl lg:text-2xl text-gray-300 min-h-[60px] lg:min-h-[72px] flex items-center">
                 <span className="text-gray-400 mr-2">I'm a</span>
                 <TypeAnimation
                   sequence={[
@@ -254,57 +110,30 @@ const Hero: React.FC = () => {
                   className="font-semibold bg-gradient-to-r from-lime-300 to-emerald-400 bg-clip-text text-transparent"
                   repeat={Infinity}
                 />
-              </motion.div>
-            </div>
+              </div>
+            </motion.div>
 
             {/* Description */}
             <motion.p 
               className="text-gray-400 text-lg leading-relaxed"
               initial={{ opacity: 0 }}
-              animate={isInView ? { opacity: 1 } : {}}
-              transition={{ delay: 1.4 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.4 }}
             >
               I craft <span className="text-emerald-400 font-medium">scalable web applications</span> and 
               <span className="text-cyan-400 font-medium"> digital experiences</span> that solve real-world 
               problems. Passionate about clean code, performance, and user-centric design.
             </motion.p>
 
-            {/* Quick Stats */}
-            <motion.div 
-              className="grid grid-cols-3 gap-4 pt-4"
-              initial={{ opacity: 0, y: 20 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ delay: 1.6 }}
-            >
-              <div className="text-center p-3 rounded-lg bg-white/5 backdrop-blur-sm border border-white/10">
-                <div className="text-2xl font-bold text-emerald-400">
-                  <AnimatedNumber value={2} suffix="+" />
-                </div>
-                <div className="text-xs text-gray-400">Years Exp</div>
-              </div>
-              <div className="text-center p-3 rounded-lg bg-white/5 backdrop-blur-sm border border-white/10">
-                <div className="text-2xl font-bold text-cyan-400">
-                  <AnimatedNumber value={50} suffix="+" />
-                </div>
-                <div className="text-xs text-gray-400">Projects</div>
-              </div>
-              <div className="text-center p-3 rounded-lg bg-white/5 backdrop-blur-sm border border-white/10">
-                <div className="text-2xl font-bold text-purple-400">
-                  <AnimatedNumber value={100} suffix="%" />
-                </div>
-                <div className="text-xs text-gray-400">Satisfaction</div>
-              </div>
-            </motion.div>
-
             {/* Social Links */}
             <motion.div 
               className="flex items-center gap-6 pt-4"
               initial={{ opacity: 0 }}
-              animate={isInView ? { opacity: 1 } : {}}
-              transition={{ delay: 1.8 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.6 }}
             >
               <motion.a 
-                href="https://github.com/YourGitHub" 
+                href="https://github.com/Adnan7766" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="group p-3 border border-gray-700 rounded-lg hover:border-emerald-400 hover:bg-emerald-400/10 transition-all duration-300"
@@ -315,7 +144,7 @@ const Hero: React.FC = () => {
                 <Github size={24} className="text-gray-400 group-hover:text-emerald-400 transition-colors" />
               </motion.a>
               <motion.a 
-                href="https://linkedin.com/in/YourLinkedIn" 
+                href="https://linkedin.com/in/adnan-rajab" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="group p-3 border border-gray-700 rounded-lg hover:border-cyan-400 hover:bg-cyan-400/10 transition-all duration-300"
@@ -324,17 +153,6 @@ const Hero: React.FC = () => {
                 whileTap={{ scale: 0.95 }}
               >
                 <Linkedin size={24} className="text-gray-400 group-hover:text-cyan-400 transition-colors" />
-              </motion.a>
-              <motion.a 
-                href="https://facebook.com/YourFacebook" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="group p-3 border border-gray-700 rounded-lg hover:border-blue-400 hover:bg-blue-400/10 transition-all duration-300"
-                aria-label="Facebook Profile"
-                whileHover={{ scale: 1.1, y: -2 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <Facebook size={24} className="text-gray-400 group-hover:text-blue-400 transition-colors" />
               </motion.a>
               <motion.a 
                 href="mailto:adnanrajab7766@gmail.com"
@@ -351,41 +169,44 @@ const Hero: React.FC = () => {
             <motion.div 
               className="flex flex-col sm:flex-row gap-4 pt-6"
               initial={{ opacity: 0, y: 20 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ delay: 2 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.8 }}
             >
               <motion.button 
                 onClick={scrollToContact}
-                className="group bg-gradient-to-r from-emerald-500 to-cyan-600 hover:from-emerald-600 hover:to-cyan-700 text-white font-semibold px-8 py-4 rounded-lg transition-all duration-300 flex items-center justify-center gap-3 shadow-lg shadow-emerald-500/25 relative overflow-hidden"
-                whileHover={{ 
-                  scale: 1.05,
-                  boxShadow: "0 20px 40px rgba(6, 182, 212, 0.3)"
-                }}
+                className="group bg-gradient-to-r from-emerald-500 to-cyan-600 hover:from-emerald-600 hover:to-cyan-700 text-white font-semibold px-8 py-4 rounded-lg transition-all duration-300 transform hover:scale-105 flex items-center justify-center gap-3 shadow-lg shadow-emerald-500/25"
+                whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
-                <motion.div
-                  className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-1000"
-                />
                 <Mail size={20} />
                 <span>Let's Connect</span>
               </motion.button>
               
               <motion.button 
                 onClick={downloadResume}
-                className="group border-2 border-emerald-400 text-emerald-400 hover:bg-emerald-400 hover:text-gray-900 font-semibold px-8 py-4 rounded-lg transition-all duration-300 flex items-center justify-center gap-3 relative overflow-hidden"
-                whileHover={{ 
-                  scale: 1.05,
-                  boxShadow: "0 10px 30px rgba(16, 185, 129, 0.3)"
-                }}
+                className="group border-2 border-emerald-400 text-emerald-400 hover:bg-emerald-400 hover:text-gray-900 font-semibold px-8 py-4 rounded-lg transition-all duration-300 flex items-center justify-center gap-3 hover:scale-105"
+                whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
-                <motion.div
-                  className="absolute inset-0 bg-emerald-400 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"
-                />
-                <Download size={20} className="relative z-10" />
-                <span className="relative z-10">Download CV</span>
+                <Download size={20} />
+                <span>Download CV</span>
               </motion.button>
             </motion.div>
+          </div>
+
+          {/* Right Side - Placeholder for Image/Animation */}
+          <motion.div
+            initial={{ opacity: 0, x: 50 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8, delay: 0.3 }}
+            className="flex justify-center"
+          >
+            <div className="w-64 h-64 lg:w-80 lg:h-80 bg-gradient-to-br from-emerald-500/20 to-cyan-500/20 rounded-2xl border border-emerald-400/30 flex items-center justify-center">
+              <div className="text-center">
+                <Rocket size={48} className="text-cyan-400 mx-auto mb-4" />
+                <p className="text-gray-400 text-sm">Portfolio Image</p>
+              </div>
+            </div>
           </motion.div>
         </div>
       </div>
