@@ -52,7 +52,7 @@ const Hero = () => {
   return (
     <section ref={sectionRef} id="home" className="min-h-screen flex items-center justify-center py-16 lg:py-24 relative overflow-hidden">
       {/* Background Elements */}
-      <FloatingParticles />
+      {/* <FloatingParticles /> */}
       <div className="absolute top-1/4 -left-20 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl"></div>
       <div className="absolute bottom-1/4 -right-20 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl"></div>
 
