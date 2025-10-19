@@ -1,38 +1,31 @@
 "use client";
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
-import { Github, Linkedin, Mail, Download, Sparkles, Rocket } from 'lucide-react';
+import { Github, Linkedin, Mail, Download } from 'lucide-react';
 import { TypeAnimation } from 'react-type-animation';
+import CodeBlock from './CodeBlock';
 
-// Fixed Floating Particles Component
+// Simple Floating Particles without window
 const FloatingParticles = () => {
-  const [isClient, setIsClient] = useState(false);
-
-  useEffect(() => {
-    setIsClient(true);
-  }, []);
-
-  if (!isClient) return null;
-
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none">
-      {[...Array(15)].map((_, i) => (
+      {[...Array(10)].map((_, i) => (
         <motion.div
           key={i}
           className="absolute w-1 h-1 bg-cyan-400/30 rounded-full"
           initial={{
-            x: Math.random() * (typeof window !== 'undefined' ? window.innerWidth : 1200),
-            y: Math.random() * (typeof window !== 'undefined' ? window.innerHeight : 800),
+            x: Math.random() * 1000,
+            y: Math.random() * 800,
           }}
           animate={{
-            y: [null, Math.random() * -100 - 50],
-            x: [null, Math.random() * 100 - 50],
+            y: [null, -50, 0],
+            x: [null, 20, 0],
             opacity: [0, 1, 0]
           }}
           transition={{
-            duration: Math.random() * 10 + 10,
+            duration: Math.random() * 8 + 8,
             repeat: Infinity,
-            delay: Math.random() * 5
+            delay: Math.random() * 3
           }}
         />
       ))}
@@ -40,24 +33,19 @@ const FloatingParticles = () => {
   );
 };
 
-// Simple Hero Component without window errors
 const Hero = () => {
   const sectionRef = useRef(null);
   const isInView = useInView(sectionRef, { once: true, margin: "-100px" });
 
   const scrollToContact = () => {
-    if (typeof window !== 'undefined') {
-      document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
-    }
+    document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
   };
 
   const downloadResume = () => {
-    if (typeof window !== 'undefined') {
-      const link = document.createElement('a');
-      link.href = '/Adnan-Rajab-Resume.pdf';
-      link.download = 'Adnan-Rajab-Resume.pdf';
-      link.click();
-    }
+    const link = document.createElement('a');
+    link.href = '/Adnan-Rajab-Resume.pdf';
+    link.download = 'Adnan-Rajab-Resume.pdf';
+    link.click();
   };
 
   return (
@@ -194,19 +182,14 @@ const Hero = () => {
             </motion.div>
           </div>
 
-          {/* Right Side - Placeholder for Image/Animation */}
+          {/* Right Side - CodeBlock */}
           <motion.div
             initial={{ opacity: 0, x: 50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 0.3 }}
             className="flex justify-center"
           >
-            <div className="w-64 h-64 lg:w-80 lg:h-80 bg-gradient-to-br from-emerald-500/20 to-cyan-500/20 rounded-2xl border border-emerald-400/30 flex items-center justify-center">
-              <div className="text-center">
-                <Rocket size={48} className="text-cyan-400 mx-auto mb-4" />
-                <p className="text-gray-400 text-sm">Portfolio Image</p>
-              </div>
-            </div>
+            <CodeBlock />
           </motion.div>
         </div>
       </div>

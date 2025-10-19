@@ -53,6 +53,25 @@ const AnimatedNumber = ({ value }: { value: string }) => {
 
 // --- FLOATING PARTICLES BACKGROUND ---
 const FloatingParticles = () => {
+  const [dimensions, setDimensions] = useState({ width: 1200, height: 800 });
+
+  useEffect(() => {
+    // Only access window on client side
+    const updateDimensions = () => {
+      setDimensions({
+        width: window.innerWidth,
+        height: window.innerHeight
+      });
+    };
+
+    // Set initial dimensions
+    updateDimensions();
+
+    // Update on resize
+    window.addEventListener('resize', updateDimensions);
+    return () => window.removeEventListener('resize', updateDimensions);
+  }, []);
+
   return (
     <div className="absolute inset-0 overflow-hidden">
       {[...Array(20)].map((_, i) => (
@@ -60,8 +79,8 @@ const FloatingParticles = () => {
           key={i}
           className="absolute w-1 h-1 bg-cyan-400/30 rounded-full"
           initial={{
-            x: Math.random() * window.innerWidth,
-            y: Math.random() * window.innerHeight,
+            x: Math.random() * dimensions.width,
+            y: Math.random() * dimensions.height,
             scale: Math.random() * 0.5 + 0.5
           }}
           animate={{

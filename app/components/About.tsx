@@ -63,6 +63,34 @@ const SlideIn = ({ children, direction = "left", delay = 0 }: {
   );
 };
 
+// Fixed Floating Particles without window
+const FloatingParticles = () => {
+  return (
+    <div className="absolute inset-0 overflow-hidden pointer-events-none">
+      {[...Array(15)].map((_, i) => (
+        <motion.div
+          key={i}
+          className="absolute w-1 h-1 bg-emerald-400/30 rounded-full"
+          initial={{
+            x: Math.random() * 1200, // Fixed: No window object
+            y: Math.random() * 800,  // Fixed: No window object
+          }}
+          animate={{
+            y: [null, Math.random() * -100 - 50],
+            x: [null, Math.random() * 100 - 50],
+            opacity: [0, 1, 0]
+          }}
+          transition={{
+            duration: Math.random() * 8 + 8,
+            repeat: Infinity,
+            delay: Math.random() * 3
+          }}
+        />
+      ))}
+    </div>
+  );
+};
+
 const About: React.FC = () => {
   const sectionRef = useRef(null);
   const isInView = useInView(sectionRef, { once: true, margin: "-100px" });
@@ -80,29 +108,8 @@ const About: React.FC = () => {
       <div className="absolute top-0 right-0 w-72 h-72 bg-emerald-500/10 rounded-full blur-3xl -translate-y-36 translate-x-36"></div>
       <div className="absolute bottom-0 left-0 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl -translate-x-48 translate-y-48"></div>
       
-      {/* Floating Particles */}
-      <div className="absolute inset-0 overflow-hidden">
-        {[...Array(15)].map((_, i) => (
-          <motion.div
-            key={i}
-            className="absolute w-1 h-1 bg-emerald-400/30 rounded-full"
-            initial={{
-              x: Math.random() * window.innerWidth,
-              y: Math.random() * window.innerHeight,
-            }}
-            animate={{
-              y: [null, Math.random() * -100 - 50],
-              x: [null, Math.random() * 100 - 50],
-              opacity: [0, 1, 0]
-            }}
-            transition={{
-              duration: Math.random() * 8 + 8,
-              repeat: Infinity,
-              delay: Math.random() * 3
-            }}
-          />
-        ))}
-      </div>
+      {/* Fixed Floating Particles */}
+      <FloatingParticles />
 
       <div className="max-w-7xl mx-auto px-6 relative z-10">
         {/* Enhanced Section Header */}
@@ -262,15 +269,12 @@ const About: React.FC = () => {
                   <motion.div
                     whileHover={{ scale: 1.05, rotate: 0.5 }}
                     transition={{ type: "spring", stiffness: 300 }}
+                    className="w-80 h-80 bg-gradient-to-br from-emerald-500/20 to-cyan-500/20 rounded-lg flex items-center justify-center"
                   >
-                    <Image
-                      src="/codee.gif"
-                      alt="Adnan Rajab - Full Stack Developer"
-                      width={400}
-                      height={400}
-                      className="rounded-lg transition-all duration-500"
-                      priority
-                    />
+                    <div className="text-center">
+                      <Sparkles size={48} className="text-cyan-400 mx-auto mb-4" />
+                      <p className="text-gray-400">Your Photo/Animation</p>
+                    </div>
                   </motion.div>
                   
                   {/* Enhanced Floating Elements */}
@@ -343,13 +347,13 @@ const About: React.FC = () => {
                   scale: 1.02,
                   transition: { type: "spring", stiffness: 300 }
                 }}
-                className={`bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-xl p-6 text-center hover:border-${item.color}-400/30 transition-all duration-300 group relative overflow-hidden`}
+                className="bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-xl p-6 text-center hover:border-emerald-400/30 transition-all duration-300 group relative overflow-hidden"
               >
                 {/* Animated Background */}
-                <div className={`absolute inset-0 bg-gradient-to-br from-${item.color}-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500`}></div>
+                <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                 
                 <motion.div 
-                  className={`w-12 h-12 bg-${item.color}-500/20 rounded-lg flex items-center justify-center mx-auto mb-4 relative z-10`}
+                  className="w-12 h-12 bg-emerald-500/20 rounded-lg flex items-center justify-center mx-auto mb-4 relative z-10"
                   whileHover={{ scale: 1.1, rotate: 360 }}
                   transition={{ duration: 0.5 }}
                 >
@@ -360,7 +364,7 @@ const About: React.FC = () => {
                 
                 {/* Hover Arrow */}
                 <motion.div
-                  className={`absolute bottom-4 right-4 text-${item.color}-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300`}
+                  className="absolute bottom-4 right-4 text-emerald-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                   whileHover={{ x: 5 }}
                 >
                   <ArrowRight size={16} />

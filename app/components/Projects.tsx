@@ -66,8 +66,22 @@ const projects = [
   }
 ];
 
-// Floating Particles Component
+// Floating Particles Component - COMPLETELY FIXED
 const FloatingParticles = () => {
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  if (!isClient) {
+    return (
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        {/* Server-side fallback - empty */}
+      </div>
+    );
+  }
+
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none">
       {[...Array(20)].map((_, i) => (
@@ -94,6 +108,34 @@ const FloatingParticles = () => {
   );
 };
 
+// ALTERNATIVE SIMPLER SOLUTION - Use this if above doesn't work
+// const FloatingParticles = () => {
+//   return (
+//     <div className="absolute inset-0 overflow-hidden pointer-events-none">
+//       {[...Array(20)].map((_, i) => (
+//         <motion.div
+//           key={i}
+//           className="absolute w-1 h-1 bg-cyan-400/30 rounded-full"
+//           initial={{
+//             x: Math.random() * 1200, // Fixed width for server
+//             y: Math.random() * 800,  // Fixed height for server
+//           }}
+//           animate={{
+//             y: [null, Math.random() * -100 - 50],
+//             x: [null, Math.random() * 100 - 50],
+//             opacity: [0, 1, 0]
+//           }}
+//           transition={{
+//             duration: Math.random() * 10 + 10,
+//             repeat: Infinity,
+//             delay: Math.random() * 5
+//           }}
+//         />
+//       ))}
+//     </div>
+//   );
+// };
+
 // Typewriter Effect Component
 const TypewriterText = ({ text, delay = 0 }: { text: string; delay?: number }) => {
   const [displayText, setDisplayText] = useState("");
@@ -115,7 +157,7 @@ const TypewriterText = ({ text, delay = 0 }: { text: string; delay?: number }) =
   return <span ref={ref}>{displayText}</span>;
 };
 
-// Project Card Component (Ab yeh alag component hai)
+// Project Card Component
 const ProjectCard = ({ project, index, isInView }: { 
   project: any; 
   index: number; 
