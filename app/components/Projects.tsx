@@ -89,9 +89,10 @@ const FloatingParticles = () => {
           key={i}
           className="absolute w-1 h-1 bg-cyan-400/30 rounded-full"
           initial={{
-            x: Math.random() * window.innerWidth,
-            y: Math.random() * window.innerHeight,
-          }}
+  x: Math.random() * (typeof window !== "undefined" ? window.innerWidth : 1200),
+  y: Math.random() * (typeof window !== "undefined" ? window.innerHeight : 800),
+}}
+
           animate={{
             y: [null, Math.random() * -100 - 50],
             x: [null, Math.random() * 100 - 50],

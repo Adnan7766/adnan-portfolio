@@ -5,8 +5,7 @@ import { Github, Linkedin, Mail, Download } from 'lucide-react';
 import { TypeAnimation } from 'react-type-animation';
 import CodeBlock from './CodeBlock';
 
-// Simple Floating Particles without window
-const FloatingParticles = () => {
+ const FloatingParticles = () => {
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none">
       {[...Array(10)].map((_, i) => (
