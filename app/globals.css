@@ -17,3 +17,26 @@ body {
   color: white;
   font-family: system-ui, -apple-system, sans-serif;
 }
+@keyframes float {
+  0% {
+    transform: translate(0, 0);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  50% {
+    transform: translate(calc(-50px + var(--random-x)), calc(-100px + var(--random-y)));
+  }
+  90% {
+    opacity: 0;
+  }
+  100% {
+    transform: translate(0, 0);
+    opacity: 0;
+  }
+}
+
+.animate-float {
+  animation: float linear infinite;
+}

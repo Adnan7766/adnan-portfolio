@@ -5,29 +5,31 @@ import { Github, Linkedin, Mail, Download } from 'lucide-react';
 import { TypeAnimation } from 'react-type-animation';
 import CodeBlock from './CodeBlock';
 
- const FloatingParticles = () => {
+ // Simple CSS-based Floating Particles
+const FloatingParticles = () => {
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none">
-      {[...Array(10)].map((_, i) => (
-        <motion.div
-          key={i}
-          className="absolute w-1 h-1 bg-cyan-400/30 rounded-full"
-          initial={{
-            x: Math.random() * 1000,
-            y: Math.random() * 800,
-          }}
-          animate={{
-            y: [null, -50, 0],
-            x: [null, 20, 0],
-            opacity: [0, 1, 0]
-          }}
-          transition={{
-            duration: Math.random() * 8 + 8,
-            repeat: Infinity,
-            delay: Math.random() * 3
-          }}
-        />
-      ))}
+      {[...Array(20)].map((_, i) => {
+        const randomX = Math.random() * 100;
+        const randomY = Math.random() * 100;
+        const duration = Math.random() * 20 + 10;
+        const delay = Math.random() * 10;
+        
+        return (
+          <div
+            key={i}
+            className="absolute w-1 h-1 bg-cyan-400/30 rounded-full animate-float"
+            style={{
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+              animationDelay: `${delay}s`,
+              animationDuration: `${duration}s`,
+              '--random-x': `${randomX}px`,
+              '--random-y': `${randomY}px`,
+            } as React.CSSProperties}
+          />
+        );
+      })}
     </div>
   );
 };

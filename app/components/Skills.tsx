@@ -51,54 +51,34 @@ const AnimatedNumber = ({ value }: { value: string }) => {
   return <span ref={ref}>0{value.includes('+') ? '+' : ''}</span>;
 };
 
-// --- FLOATING PARTICLES BACKGROUND ---
+// Simple CSS-based Floating Particles
 const FloatingParticles = () => {
-  const [dimensions, setDimensions] = useState({ width: 1200, height: 800 });
-
-  useEffect(() => {
-    // Only access window on client side
-    const updateDimensions = () => {
-      setDimensions({
-        width: window.innerWidth,
-        height: window.innerHeight
-      });
-    };
-
-    // Set initial dimensions
-    updateDimensions();
-
-    // Update on resize
-    window.addEventListener('resize', updateDimensions);
-    return () => window.removeEventListener('resize', updateDimensions);
-  }, []);
-
   return (
-    <div className="absolute inset-0 overflow-hidden">
-      {[...Array(20)].map((_, i) => (
-        <motion.div
-          key={i}
-          className="absolute w-1 h-1 bg-cyan-400/30 rounded-full"
-          initial={{
-            x: Math.random() * dimensions.width,
-            y: Math.random() * dimensions.height,
-            scale: Math.random() * 0.5 + 0.5
-          }}
-          animate={{
-            y: [null, Math.random() * -100 - 50],
-            x: [null, Math.random() * 100 - 50],
-            opacity: [0, 1, 0]
-          }}
-          transition={{
-            duration: Math.random() * 10 + 10,
-            repeat: Infinity,
-            delay: Math.random() * 5
-          }}
-        />
-      ))}
+    <div className="absolute inset-0 overflow-hidden pointer-events-none">
+      {[...Array(20)].map((_, i) => {
+        const randomX = Math.random() * 100;
+        const randomY = Math.random() * 100;
+        const duration = Math.random() * 20 + 10;
+        const delay = Math.random() * 10;
+        
+        return (
+          <div
+            key={i}
+            className="absolute w-1 h-1 bg-cyan-400/30 rounded-full animate-float"
+            style={{
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+              animationDelay: `${delay}s`,
+              animationDuration: `${duration}s`,
+              '--random-x': `${randomX}px`,
+              '--random-y': `${randomY}px`,
+            } as React.CSSProperties}
+          />
+        );
+      })}
     </div>
   );
 };
-
 // --- PULSING ORB COMPONENT ---
 const PulsingOrb = ({ color, delay = 0 }: { color: string; delay?: number }) => (
   <motion.div

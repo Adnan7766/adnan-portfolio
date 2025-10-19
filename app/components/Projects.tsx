@@ -66,76 +66,34 @@ const projects = [
   }
 ];
 
-// Floating Particles Component - COMPLETELY FIXED
+// Simple CSS-based Floating Particles - NO WINDOW ERROR
 const FloatingParticles = () => {
-  const [isClient, setIsClient] = useState(false);
-
-  useEffect(() => {
-    setIsClient(true);
-  }, []);
-
-  if (!isClient) {
-    return (
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {/* Server-side fallback - empty */}
-      </div>
-    );
-  }
-
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none">
-      {[...Array(20)].map((_, i) => (
-        <motion.div
-          key={i}
-          className="absolute w-1 h-1 bg-cyan-400/30 rounded-full"
-          initial={{
-  x: Math.random() * (typeof window !== "undefined" ? window.innerWidth : 1200),
-  y: Math.random() * (typeof window !== "undefined" ? window.innerHeight : 800),
-}}
-
-          animate={{
-            y: [null, Math.random() * -100 - 50],
-            x: [null, Math.random() * 100 - 50],
-            opacity: [0, 1, 0]
-          }}
-          transition={{
-            duration: Math.random() * 10 + 10,
-            repeat: Infinity,
-            delay: Math.random() * 5
-          }}
-        />
-      ))}
+      {[...Array(20)].map((_, i) => {
+        const randomX = Math.random() * 100;
+        const randomY = Math.random() * 100;
+        const duration = Math.random() * 20 + 10;
+        const delay = Math.random() * 10;
+        
+        return (
+          <div
+            key={i}
+            className="absolute w-1 h-1 bg-cyan-400/30 rounded-full animate-float"
+            style={{
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+              animationDelay: `${delay}s`,
+              animationDuration: `${duration}s`,
+              '--random-x': `${randomX}px`,
+              '--random-y': `${randomY}px`,
+            } as React.CSSProperties}
+          />
+        );
+      })}
     </div>
   );
 };
-
-// ALTERNATIVE SIMPLER SOLUTION - Use this if above doesn't work
-// const FloatingParticles = () => {
-//   return (
-//     <div className="absolute inset-0 overflow-hidden pointer-events-none">
-//       {[...Array(20)].map((_, i) => (
-//         <motion.div
-//           key={i}
-//           className="absolute w-1 h-1 bg-cyan-400/30 rounded-full"
-//           initial={{
-//             x: Math.random() * 1200, // Fixed width for server
-//             y: Math.random() * 800,  // Fixed height for server
-//           }}
-//           animate={{
-//             y: [null, Math.random() * -100 - 50],
-//             x: [null, Math.random() * 100 - 50],
-//             opacity: [0, 1, 0]
-//           }}
-//           transition={{
-//             duration: Math.random() * 10 + 10,
-//             repeat: Infinity,
-//             delay: Math.random() * 5
-//           }}
-//         />
-//       ))}
-//     </div>
-//   );
-// };
 
 // Typewriter Effect Component
 const TypewriterText = ({ text, delay = 0 }: { text: string; delay?: number }) => {
@@ -158,7 +116,7 @@ const TypewriterText = ({ text, delay = 0 }: { text: string; delay?: number }) =
   return <span ref={ref}>{displayText}</span>;
 };
 
-// Project Card Component
+// Project Card Component (Same as before)
 const ProjectCard = ({ project, index, isInView }: { 
   project: any; 
   index: number; 
