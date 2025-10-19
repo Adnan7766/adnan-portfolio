@@ -1,15 +1,11 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: 'standalone',
-  // Or for static export:
-  // output: 'export',
+  // Remove 'standalone' - Vercel doesn't need it
   trailingSlash: true,
   images: {
     unoptimized: true
-  },
-  experimental: {
-    appDir: true
   }
+  // Remove experimental.appDir - it's not needed in Next.js 14
 }
 
 module.exports = nextConfig
