@@ -1,8 +1,15 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  output: 'standalone',
+  // Or for static export:
+  // output: 'export',
+  trailingSlash: true,
   images: {
-    domains: ['images.unsplash.com'],
+    unoptimized: true
   },
+  experimental: {
+    appDir: true
+  }
 }
 
 module.exports = nextConfig
